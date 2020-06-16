@@ -1,0 +1,92 @@
+[
+   {
+      "title": "Hub Server!",
+      "description": "This is the main server that has all the cool things like people.. and chats.. and people using the chats!!~ <:xliceLove:552160326552911907>\nhttps://discord.gg/TbF9czy",
+      "url": "https://discord.gg/TbF9czy",
+      "color": 16759224,
+      "thumbnail": {
+         "url": "https://cdn.discordapp.com/attachments/552352957958717450/552404326388203520/1.png"
+      },
+      "author": {
+         "name": "Main Server",
+         "url": "https://discord.gg/TbF9czy",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404326388203520/1.png"
+      },
+      "footer": {
+         "text": "Main Server",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404326388203520/1.png"
+      }
+   },
+   {
+      "title": "Emote Server 1",
+      "description": "Accessory emote server 1 <:k3llyGulp:552168835269132310>\nhttps://discord.gg/U6M67vQ",
+      "url": "https://discord.gg/U6M67vQ",
+      "color": 16758754,
+      "thumbnail": {
+         "url": "https://cdn.discordapp.com/attachments/552352957958717450/552404331253596171/2.png"
+      },
+      "author": {
+         "name": "Emote Server 1",
+         "url": "https://discord.gg/U6M67vQ",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404331253596171/2.png"
+      },
+      "footer": {
+         "text": "Emote 1",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404331253596171/2.png"
+      }
+   },
+   {
+      "title": "Emote Server 2",
+      "description": "Accessory emote server 2 <:k3llyGulp:552168835269132310>\nhttps://discord.gg/we77MRq",
+      "url": "https://discord.gg/we77MRq",
+      "color": 15775743,
+      "thumbnail": {
+         "url": "https://cdn.discordapp.com/attachments/552352957958717450/552404334004928525/3.png"
+      },
+      "author": {
+         "name": "Emote Server 2",
+         "url": "https://discord.gg/we77MRq",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404334004928525/3.png"
+      },
+      "footer": {
+         "text": "Emote 2",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404334004928525/3.png"
+      }
+   },
+   {
+      "title": "Emote Server 3",
+      "description": "Accessory emote server 3 <:k3llyGulp:552168835269132310>\nhttps://discord.gg/esBvSyz",
+      "url": "https://discord.gg/esBvSyz",
+      "color": 12302079,
+      "thumbnail": {
+         "url": "https://cdn.discordapp.com/attachments/552352957958717450/552404336341155840/4.png"
+      },
+      "author": {
+         "name": "Emote Server 3",
+         "url": "https://discord.gg/esBvSyz",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404336341155840/4.png"
+      },
+      "footer": {
+         "text": "Emote 3",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404336341155840/4.png"
+      }
+   },
+   {
+      "title": "Emote Server 4",
+      "description": "Accessory emote server 4 <:k3llyGulp:552168835269132310>\nhttps://discord.gg/5ju5D5w",
+      "url": "https://discord.gg/5ju5D5w",
+      "color": 11984895,
+      "thumbnail": {
+         "url": "https://cdn.discordapp.com/attachments/552352957958717450/552404338585239563/5.png"
+      },
+      "author": {
+         "name": "Emote Server 4",
+         "url": "https://discord.gg/5ju5D5w",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404338585239563/5.png"
+      },
+      "footer": {
+         "text": "Emote 4",
+         "iconURL": "https://cdn.discordapp.com/attachments/552352957958717450/552404338585239563/5.png"
+      }
+   }
+]
