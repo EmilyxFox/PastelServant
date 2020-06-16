@@ -5,6 +5,7 @@ module.exports = {
     usage: '<emote> [colour]',
     guildOnly: false,
     cooldown: 0,
+    requiredPermissions: ['MANAGE_EMOJIS'],
     execute(msg, args) {
         const dClient = msg.client;
 

@@ -39,17 +39,81 @@ dClient.on('message', msg => {
         const command = dClient.commands.get(commandName);
 
         if (command.guildOnly && msg.channel.type !== 'text') {
-            return msg.reply('This command only works in servers.')
+            let embed = {
+                "title": `${command.name} error:`,
+                "description": `This command is only available in guild chats.`,
+                "color": 16112271,
+                "timestamp": new Date(),
+                "footer": {
+                  "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
+                  "text": msg.author.tag
+                },
+                "author": {
+                  "name": dClient.user.username,
+                  "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
+                }
+            };
+            return msg.reply({ embed: embed })
         }
 
+        if (command.requiredPermissions.includes("OWNER") && msg.author.id != ownerID) {
+            let embed = {
+                "title": `${command.name} error:`,
+                "description": `This command is only accessible by the developer.`,
+                "color": 16112271,
+                "timestamp": new Date(),
+                "footer": {
+                  "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
+                  "text": msg.author.tag
+                },
+                "author": {
+                  "name": dClient.user.username,
+                  "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
+                }
+            };
+            return msg.reply({ embed: embed });
+        };
+
+        if (!msg.member.hasPermission(command.requiredPermissions)) {
+            let embed = {
+                "title": `${command.name} error:`,
+                "description": `You are missing required permissions: \n\`\`\`${command.requiredPermissions}\`\`\``,
+                "color": 16112271,
+                "timestamp": new Date(),
+                "footer": {
+                  "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
+                  "text": msg.author.tag
+                },
+                "author": {
+                  "name": dClient.user.username,
+                  "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
+                }
+            };
+            return msg.reply({ embed: embed });
+        };
+
         if (command.args && !args.length) {
-            let reply = `You didn't provide any arguments, ${msg.author}`;
+            let reply = `You didn't provide any arguments.`;
 
             if (command.usage) {
                 reply += `\nUsage: \`${prefix}${command.name} ${command.usage}\``
             }
+            let embed = {
+                "title": `${command.name} error:`,
+                "description": reply,
+                "color": 16112271,
+                "timestamp": new Date(),
+                "footer": {
+                  "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
+                  "text": msg.author.tag
+                },
+                "author": {
+                  "name": dClient.user.username,
+                  "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
+                }
+            };
 
-            return msg.channel.send(reply);
+            return msg.channel.send({ embed: embed });
         }
 
         if (!cooldowns.has(command.name)) {
@@ -65,7 +129,22 @@ dClient.on('message', msg => {
 
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                return msg.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before using \`${prefix}${command.name}\`.`);
+
+                let embed = {
+                    "title": `${command.name} error:`,
+                    "description": `Please wait \`${timeLeft.toFixed(1)} second(s)\` before using \`${prefix}${command.name}\`.`,
+                    "color": 16112271,
+                    "timestamp": new Date(),
+                    "footer": {
+                      "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
+                      "text": msg.author.tag
+                    },
+                    "author": {
+                      "name": dClient.user.username,
+                      "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
+                    }
+                };
+                return msg.reply({ embed: embed });
             }
         }
 

@@ -4,7 +4,8 @@ module.exports = {
     args: true,
     usage: '<command>',
     guildOnly: false,
-    cooldown: 5,
+	cooldown: 5,
+	requiredPermissions: ['OWNER'],
 	execute(msg, args) {
         const dClient = msg.client;
 

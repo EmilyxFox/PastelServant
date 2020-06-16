@@ -5,16 +5,14 @@ module.exports = {
     usage: '<@user>',
     guildOnly: true,
     cooldown: 0,
+    requiredPermissions: ['MANAGE_NICKNAMES'],
     execute(msg, args) {
         const dClient = msg.client;
 
-        let allowedRoles = [];
-        allowedRoles.push('Emote Empress', 'Staff Team', 'Emiwy');
 
         let nitroRole = [];
         nitroRole.push("Nitro Booster");
 
-        if (msg.channel.type === "text") {
 
             if (!args[0]) {
                 msg.channel.send("Please mention a user.");
@@ -23,8 +21,6 @@ module.exports = {
 
 
 
-            //Check if commander is in allowedRoles
-            if (msg.member.roles.cache.find(r => allowedRoles.indexOf(r.name) !== -1)) {
                 //Get the mentioned member in args space 0
                 let match = args[0].match(/<@!?(\d{17,19})>/);
                 //Remove mentioned member from args
@@ -144,12 +140,6 @@ module.exports = {
                 } else {
                     msg.channel.send("Please mention a user.");
                 }
-            } else {
-                msg.channel.send("Insufficient Permissions");
-            }
-        }else{
-            msg.channel.send("You can't use this command in DMs. Please try again in a server chat.")
-        }
     }
 }
 

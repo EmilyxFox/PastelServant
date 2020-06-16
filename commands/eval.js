@@ -5,6 +5,7 @@ module.exports = {
     usage: '<js input>',
     guildOnly: false,
     cooldown: 0,
+    requiredPermissions: ['OWNER'],
     execute(msg, args, joinedArgs, ownerID) {
         const { inspect } = require("util");
         const dClient = msg.client;

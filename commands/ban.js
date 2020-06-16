@@ -5,6 +5,7 @@ module.exports = {
   usage: '<@user> [reason]',
   guildOnly: true,
   cooldown: 0,
+  requiredPermissions: ['BAN_MEMBERS'],
   execute(msg, args) {
     const dClient = msg.client;
 

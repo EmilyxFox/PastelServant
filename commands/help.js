@@ -7,6 +7,7 @@ module.exports = {
     usage: '[command]',
     guildOnly: false,
     cooldown: 5,
+    requiredPermissions: ['SEND_MESSAGES'],
     execute(msg, args) {
         const dClient = msg.client;
 

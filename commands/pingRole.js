@@ -5,6 +5,7 @@ module.exports = {
     usage: '<role name>',
     guildOnly: true,
     cooldown: 0,
+    requiredPermissions: ['MANAGE_ROLES'],
     execute(msg, args, joinedArgs) {
         const dClient = msg.client;
 
