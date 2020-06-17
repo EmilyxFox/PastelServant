@@ -1,4 +1,4 @@
-const { prefix } = require('../discordConfig.json');
+const { prefix, ownerID } = require('../discordConfig.json');
 
 module.exports = {
     name: 'help',
@@ -40,13 +40,20 @@ module.exports = {
 
 
             commands.forEach(command => {
-                embed.fields.push(
-                    {
+                if (command.requiredPermissions.includes("OWNER") && msg.author.id === ownerID) {
+                    embed.fields.push({
                         name: prefix + command.name,
                         value: command.description,
                         inline: true
-                    }
-                )
+                    })
+                    return;
+                } else if (msg.member.hasPermission(command.requiredPermissions)) {
+                    embed.fields.push({
+                        name: prefix + command.name,
+                        value: command.description,
+                        inline: true
+                    })
+                }
             })
 
             return msg.author.send({ embed: embed, split: true })
