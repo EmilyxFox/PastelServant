@@ -40,13 +40,15 @@ module.exports = {
 
 
             commands.forEach(command => {
-                if (command.requiredPermissions.includes("OWNER") && msg.author.id === ownerID) {
-                    embed.fields.push({
-                        name: prefix + command.name,
-                        value: command.description,
-                        inline: true
-                    })
-                    return;
+                if (command.requiredPermissions.includes("OWNER")) {
+                    if (msg.author.id === ownerID) {
+                        embed.fields.push({
+                            name: prefix + command.name,
+                            value: command.description,
+                            inline: true
+                        })
+                        return;
+                    }
                 } else if (msg.member.hasPermission(command.requiredPermissions)) {
                     embed.fields.push({
                         name: prefix + command.name,
