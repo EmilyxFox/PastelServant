@@ -12,7 +12,7 @@ module.exports = {
 
 
 
-            //Check if commander is in allowedRoles
+            //This shouldn't be required, but until I'm 100% confident in the permissions check in bot.js I'll leave it
             if (msg.author.id === ownerID) {
                 let toEval = joinedArgs;
                 try {

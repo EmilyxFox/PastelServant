@@ -9,7 +9,7 @@ module.exports = {
     execute(msg, args){
         const dClient = msg.client;
         
-        msg.channel.send("test");
+        msg.channel.send("Pong!");
         console.log(`${msg.author.tag} pinged the bot`);
     }
 }

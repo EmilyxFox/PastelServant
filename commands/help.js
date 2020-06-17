@@ -11,7 +11,6 @@ module.exports = {
     execute(msg, args) {
         const dClient = msg.client;
 
-        const data = [];
         const { commands } = msg.client;
 
 
