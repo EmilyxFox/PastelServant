@@ -74,22 +74,24 @@ dClient.on('message', msg => {
             return msg.reply({ embed: embed });
         };
 
-        if (!msg.member.hasPermission(command.requiredPermissions)) {
-            let embed = {
-                "title": `${command.name} error:`,
-                "description": `You are missing required permissions: \n\`\`\`${command.requiredPermissions}\`\`\``,
-                "color": 16112271,
-                "timestamp": new Date(),
-                "footer": {
-                  "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
-                  "text": msg.author.tag
-                },
-                "author": {
-                  "name": dClient.user.username,
-                  "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
-                }
+        if (msg.channel.type === "text") {
+            if (!msg.member.hasPermission(command.requiredPermissions)) {
+                let embed = {
+                    "title": `${command.name} error:`,
+                    "description": `You are missing required permissions: \n\`\`\`${command.requiredPermissions}\`\`\``,
+                    "color": 16112271,
+                    "timestamp": new Date(),
+                    "footer": {
+                      "icon_url": msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
+                      "text": msg.author.tag
+                    },
+                    "author": {
+                      "name": dClient.user.username,
+                      "icon_url": dClient.user.displayAvatarURL({ format: 'png', dymamic: true })
+                    }
+                };
+                return msg.reply({ embed: embed });
             };
-            return msg.reply({ embed: embed });
         };
 
         if (command.args && !args.length) {
