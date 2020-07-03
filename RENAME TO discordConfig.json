@@ -1,5 +1,6 @@
 {
     "token": "BOT TOKEN",
     "prefix": "!",
-    "ownerID": "OWNER ID"
+    "ownerID": "OWNER ID",
+    "modMail": "MODMAIL CHANNEL"
 }
