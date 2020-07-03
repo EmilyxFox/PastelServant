@@ -1,3 +1,7 @@
+const { MessageEmbed } = require('discord.js');
+const { defaultEmbed, errorEmbed } = require('../embeds');
+const chalk = require('chalk');
+
 module.exports = {
   name: 'ban',
   description: 'Bans a guild member!',
@@ -6,66 +10,45 @@ module.exports = {
   guildOnly: true,
   cooldown: 0,
   requiredPermissions: ['BAN_MEMBERS'],
+  devOnly: false,
   execute(msg, args) {
+    // eslint-disable-next-line no-unused-vars
     const dClient = msg.client;
 
 
-    //Get the mentioned member in args space 0
-    let mentionedMember = args[0];
-    //Remove mentioned member from args
+    // Get the mentioned member in args space 0
+    const mentionedMember = args[0];
+    // Remove mentioned member from args
     args.shift();
-    //Join rest of args into "reason"
-    reason = args.join(` `);
-    //Turn mention into userID, and find guildMember. Save in bannedUser
-    let bannedUser = msg.guild.members.cache.find(m => m.id === mentionedMember.replace(/<@!|>/g, ""));
+    // Join rest of args into "reason"
+    const reason = args.join(` `);
+    // Turn mention into userID, and find guildMember. Save in bannedUser
+    const bannedUser = msg.guild.members.cache.find(m => m.id === mentionedMember.replace(/<[@&!]*|>/g, ''));
     if (bannedUser != null) {
-      //Bans bannedUser
+      // Bans bannedUser
       bannedUser.ban({
-          reason: `Banned by ${msg.author.tag} with reason: "${reason}"`
-        })
-        //If success then
+        reason: `Banned by ${msg.author.tag} with reason: "${reason}"`,
+      })
+        // If success then
         .then(() => {
-          //Console log ban confirmation
-          console.log(`[Ban] ${msg.author.tag} banned ${bannedUser.user.tag} with reason: "${reason}"`);
-          //Create chat embed with ban information
-          let embed = {
-            "title": "Banned user:",
-            "description": `${bannedUser.user.tag} \n with reason: \`\`\`${reason}\`\`\``,
-            "color": 13632027,
-            "timestamp": new Date(),
-            "footer": {
-              "icon_url": msg.author.displayAvatarURL({
-                format: 'png',
-                dymamic: true
-              }),
-              "text": `Banned by ${msg.author.tag}`
-            },
-            "thumbnail": {
-              "url": bannedUser.user.displayAvatarURL({
-                format: 'png',
-                dymamic: true
-              })
-            },
-            "author": {
-              "name": dClient.user.username,
-              "icon_url": dClient.user.displayAvatarURL({
-                format: 'png',
-                dymamic: true
-              })
-            }
-          };
-          //Send chat embed
-          msg.channel.send({
-            embed
-          });
+          // Console log ban confirmation
+          console.log(chalk`{green ${msg.author.tag}} ${chalk.red('banned')} ${bannedUser.user.tag} with reason: ${chalk.italic('"' + reason + '"')}`);
+          // Send chat embed
+          msg.channel.send(
+            new MessageEmbed(defaultEmbed)
+              .setTitle(`Banned user:`)
+              .setDescription(`${bannedUser.user.tag} \n with reason: \`\`\`${reason}\`\`\``)
+              .setFooter(`Banned by ${msg.author.tag}`, msg.author.displayAvatarURL({ format: 'png', dynamic: true }))
+              .setThumbnail(bannedUser.user.displayAvatarURL({ format: 'png', dynamic: true })),
+          );
         })
-        //If error then log error
+        // If error then log error
         .catch(err => {
-          console.log(err)
+          console.log(err);
         });
-      //If commander not in allowedRoles then send message
+      // If commander not in allowedRoles then send message
     } else {
-      msg.channel.send("Please mention a user.");
+      msg.channel.send(errorEmbed(msg, this.name, `User not found. Make sure you're mentioning a user.`));
     }
-  }
-}
+  },
+};
