@@ -19,7 +19,7 @@ dClient.commands = new Discord.Collection();
 // Cooldown collection
 const cooldowns = new Discord.Collection();
 
-mongoose.connect('mongodb://localhost/ReactionRoles', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb://localhost/${dbName}`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
