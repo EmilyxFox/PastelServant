@@ -2,5 +2,7 @@
     "token": "BOT TOKEN",
     "prefix": "!",
     "ownerID": "OWNER ID",
-    "modMail": "MODMAIL CHANNEL"
+    "modMail": "MODMAIL CHANNEL",
+    "defaultColor": "HEX COLOUR",
+    "defaultErrorColor": "HEX COLOUR"
 }
