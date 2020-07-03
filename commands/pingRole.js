@@ -26,7 +26,7 @@ module.exports = {
           msg.delete();
           console.log(`[pingRole] isMentionable on ${updated.name} has been set to ${updated.mentionable}`);
           msg.channel.send(`${updated}`);
-          console.log(`[pingRole] Message pinging ${updated.name} sent!`);
+          console.log(`Message pinging ${updated.name} sent!`);
         })
         .then(() => {
           if (wasMentionable === false) {

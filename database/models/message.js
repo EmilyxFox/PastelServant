@@ -3,7 +3,6 @@ const MessageSchema = new mongoose.Schema({
   messageID : { type: String, required: true },
   emojiRoleMappings : { type: mongoose.Schema.Types.Mixed },
 });
-module.exports = {
-  dbName: 'PastelServant',
-  MessageModel: mongoose.model('messages', MessageSchema),
-};
+
+// eslint-disable-next-line no-unused-vars
+const MessageModel = module.exports = mongoose.model('messages', MessageSchema);
