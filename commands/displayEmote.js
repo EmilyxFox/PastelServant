@@ -11,11 +11,7 @@ module.exports = {
     const dClient = msg.client;
 
     const colorThief = require('colorthief');
-
-    if (!args[0]) {
-      msg.channel.send('Please mention a user.');
-      return;
-    }
+    
 
     const suspectedEmote = args[0];
     let suspectedID = suspectedEmote.replace(/[<>]/g, '').replace(':', '');

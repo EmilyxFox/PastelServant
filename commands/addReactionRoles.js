@@ -1,6 +1,6 @@
 const { MessageCollector, MessageEmbed } = require('discord.js');
 const { errorEmbed, unknownErrorEmbed, defaultEmbed } = require('../embeds');
-const MessageModel = require('../database/models/message');
+const { MessageModel } = require('../database/dbConfig.js');
 const chalk = require('chalk');
 
 module.exports = {

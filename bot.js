@@ -2,7 +2,7 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
-const MessageModel = require('./database/models/message');
+const { MessageModel, dbName } = require('./database/dbConfig.js');
 // Load in Discord authentication token
 const { token, prefix, ownerID } = require('./discordConfig.json');
 
