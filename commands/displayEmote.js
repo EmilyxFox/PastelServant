@@ -11,7 +11,7 @@ module.exports = {
     const dClient = msg.client;
 
     const colorThief = require('colorthief');
-
+    
 
     const suspectedEmote = args[0];
     let suspectedID = suspectedEmote.replace(/[<>]/g, '').replace(':', '');

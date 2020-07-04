@@ -5,7 +5,7 @@ module.exports = {
     const unknownErrorTemplate = {
       'title': 'unknown error',
       'description': 'Unknown error. Please report bug ❤',
-      'color': msg.guild.me.displayColor || '#e17582',
+      'color': msg.guild.me.displayColor || '#e91e5e',
       'timestamp': new Date(),
       'footer': {
         'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
@@ -26,7 +26,7 @@ module.exports = {
     const dClient = msg.client;
     const errorTemplate = {
       'title': 'unknown error',
-      'color': msg.guild.me.displayColor || '#e17582',
+      'color': msg.guild.me.displayColor || '#e91e5e',
       'timestamp': new Date(),
       'footer': {
         'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
@@ -48,7 +48,7 @@ module.exports = {
     const dClient = msg.client;
     const defaultTemplate = {
       'title': 'defaultEmbed',
-      'color': msg.guild.me.displayColor || '#fdcd79',
+      'color': msg.guild.me.displayColor || '#e91e5e',
       'timestamp': new Date(),
       'footer': {
         'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
