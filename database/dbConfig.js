@@ -1,3 +1,5 @@
+const { botName } = require('../discordConfig.json');
+
 const mongoose = require('mongoose');
 const reactionRolesSchema = new mongoose.Schema({
   messageID : { type: String, required: true },
@@ -8,7 +10,7 @@ const defaultRoleSchema = new mongoose.Schema({
   defaultRole: { type: String },
 });
 module.exports = {
-  dbName: 'CozyBot',
+  dbName: botName,
   ReactionRolesModel: mongoose.model('reactionRoles', reactionRolesSchema),
   DefaultRoleModel: mongoose.model('defaultRoles', defaultRoleSchema),
 };
