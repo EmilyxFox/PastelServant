@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const db = mongoose.connection;
 const { MessageModel, dbName } = require('./database/dbConfig.js');
 // Load in Discord authentication token
-const { token, prefix, ownerID } = require('./discordConfig.json');
+// eslint-disable-next-line no-unused-vars
+const { token, prefix, ownerID, defaultColor, defaultErrorColor } = require('./discordConfig.json');
 
 // Load Chalk
 const chalk = require('chalk');
@@ -48,7 +49,7 @@ dClient.on('message', msg => {
       const embed = {
         'title': `${command.name} error:`,
         'description': `This command is only available in guild chats.`,
-        'color': '#e17582',
+        'color': defaultErrorColor,
         'timestamp': new Date(),
         'footer': {
           'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
@@ -66,7 +67,7 @@ dClient.on('message', msg => {
       const embed = {
         'title': `${command.name} error:`,
         'description': `This command is only accessible by the developer.`,
-        'color': '#e17582',
+        'color': defaultErrorColor,
         'timestamp': new Date(),
         'footer': {
           'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
@@ -85,7 +86,7 @@ dClient.on('message', msg => {
         const embed = {
           'title': `${command.name} error:`,
           'description': `You are missing one of the required permissions: \n\`\`\`${command.requiredPermissions}\`\`\``,
-          'color': '#e17582',
+          'color': defaultErrorColor,
           'timestamp': new Date(),
           'footer': {
             'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
@@ -109,7 +110,7 @@ dClient.on('message', msg => {
       const embed = {
         'title': `${command.name} error:`,
         'description': reply,
-        'color': '#e17582',
+        'color': defaultErrorColor,
         'timestamp': new Date(),
         'footer': {
           'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
@@ -141,7 +142,7 @@ dClient.on('message', msg => {
         const embed = {
           'title': `${command.name} error:`,
           'description': `Please wait \`${timeLeft.toFixed(1)} second(s)\` before using \`${prefix}${command.name}\`.`,
-          'color': '#e17582',
+          'color': defaultErrorColor,
           'timestamp': new Date(),
           'footer': {
             'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
