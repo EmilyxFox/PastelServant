@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 const db = mongoose.connection;
 const { MessageModel, dbName } = require('./database/dbConfig.js');
 // Load in Discord authentication token
-// eslint-disable-next-line no-unused-vars
-const { token, prefix, ownerID, defaultColor, defaultErrorColor } = require('./discordConfig.json');
+const { token, prefix, ownerID } = require('./discordConfig.json');
 
 // Load Chalk
 const chalk = require('chalk');
 
 // Load in Discord module
 const Discord = require('discord.js');
+const { defaultEmbed } = require('./embeds.js');
 const dClient = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
 // Config
@@ -46,58 +46,28 @@ dClient.on('message', msg => {
     const command = dClient.commands.get(commandName);
 
     if (command.guildOnly && msg.channel.type !== 'text') {
-      const embed = {
-        'title': `${command.name} error:`,
-        'description': `This command is only available in guild chats.`,
-        'color': defaultErrorColor,
-        'timestamp': new Date(),
-        'footer': {
-          'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
-          'text': msg.author.tag,
-        },
-        'author': {
-          'name': dClient.user.username,
-          'icon_url': dClient.user.displayAvatarURL({ format: 'png', dymamic: true }),
-        },
-      };
-      return msg.reply({ embed: embed });
+      return msg.reply(
+        new Discord.MessageEmbed(defaultEmbed(msg))
+          .setTitle(`${command.name} error:`)
+          .setDescription(`This command is only available in guild chats.`),
+      );
     }
 
     if (command.devOnly && msg.author.id != ownerID) {
-      const embed = {
-        'title': `${command.name} error:`,
-        'description': `This command is only accessible by the developer.`,
-        'color': defaultErrorColor,
-        'timestamp': new Date(),
-        'footer': {
-          'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
-          'text': msg.author.tag,
-        },
-        'author': {
-          'name': dClient.user.username,
-          'icon_url': dClient.user.displayAvatarURL({ format: 'png', dymamic: true }),
-        },
-      };
-      return msg.reply({ embed: embed });
+      return msg.reply(
+        new Discord.MessageEmbed(defaultEmbed(msg))
+          .setTitle(`${command.name} error:`)
+          .setDescription(`This command is only accessible by the developer.`),
+      );
     }
 
     if (msg.channel.type === 'text') {
       if (!msg.member.hasPermission(command.requiredPermissions)) {
-        const embed = {
-          'title': `${command.name} error:`,
-          'description': `You are missing one of the required permissions: \n\`\`\`${command.requiredPermissions}\`\`\``,
-          'color': defaultErrorColor,
-          'timestamp': new Date(),
-          'footer': {
-            'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
-            'text': msg.author.tag,
-          },
-          'author': {
-            'name': dClient.user.username,
-            'icon_url': dClient.user.displayAvatarURL({ format: 'png', dymamic: true }),
-          },
-        };
-        return msg.reply({ embed: embed });
+        return msg.reply(
+          new Discord.MessageEmbed(defaultEmbed(msg))
+            .setTitle(`${command.name} error:`)
+            .setDescription(`You are missing one of the required permissions: \n\`\`\`${command.requiredPermissions}\`\`\``),
+        );
       }
     }
 
@@ -107,22 +77,11 @@ dClient.on('message', msg => {
       if (command.usage) {
         reply += `\nUsage: \`${prefix}${command.name} ${command.usage}\``;
       }
-      const embed = {
-        'title': `${command.name} error:`,
-        'description': reply,
-        'color': defaultErrorColor,
-        'timestamp': new Date(),
-        'footer': {
-          'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
-          'text': msg.author.tag,
-        },
-        'author': {
-          'name': dClient.user.username,
-          'icon_url': dClient.user.displayAvatarURL({ format: 'png', dymamic: true }),
-        },
-      };
-
-      return msg.reply({ embed: embed });
+      return msg.reply(
+        new Discord.MessageEmbed(defaultEmbed(msg))
+          .setTitle(`${command.name} error:`)
+          .setDescription(reply),
+      );
     }
 
     if (!cooldowns.has(command.name)) {
@@ -139,21 +98,11 @@ dClient.on('message', msg => {
       if (now < expirationTime) {
         const timeLeft = (expirationTime - now) / 1000;
 
-        const embed = {
-          'title': `${command.name} error:`,
-          'description': `Please wait \`${timeLeft.toFixed(1)} second(s)\` before using \`${prefix}${command.name}\`.`,
-          'color': defaultErrorColor,
-          'timestamp': new Date(),
-          'footer': {
-            'icon_url': msg.author.displayAvatarURL({ format: 'png', dymamic: true }),
-            'text': msg.author.tag,
-          },
-          'author': {
-            'name': dClient.user.username,
-            'icon_url': dClient.user.displayAvatarURL({ format: 'png', dymamic: true }),
-          },
-        };
-        return msg.reply({ embed: embed });
+        return msg.reply(
+          new Discord.MessageEmbed(defaultEmbed(msg))
+            .setTitle(`${command.name} error:`)
+            .setDescription(`Please wait \`${timeLeft.toFixed(1)} second(s)\` before using \`${prefix}${command.name}\`.`),
+        );
       }
     }
 
