@@ -2,7 +2,7 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
-const { MessageModel, dbName } = require('./database/dbConfig.js');
+const { ReactionRolesModel, DefaultRoleModel, dbName } = require('./database/dbConfig.js');
 // Load in Discord authentication token
 const { token, prefix, ownerID } = require('./discordConfig.json');
 
@@ -125,7 +125,7 @@ dClient.on('messageReactionAdd', async (reaction, user) => {
 
   const { id } = reaction.message;
   try {
-    const reactionRoleInformation = await MessageModel.findOne({ messageID: id });
+    const reactionRoleInformation = await ReactionRolesModel.findOne({ messageID: id });
     if (reactionRoleInformation) {
       // eslint-disable-next-line no-prototype-builtins
       if(reactionRoleInformation.emojiRoleMappings.hasOwnProperty(reaction.emoji.id)) {
@@ -151,7 +151,7 @@ dClient.on('messageReactionRemove', async (reaction, user) =>{
 
   const { id } = reaction.message;
   try {
-    const reactionRoleInformation = await MessageModel.findOne({ messageID: id });
+    const reactionRoleInformation = await ReactionRolesModel.findOne({ messageID: id });
     if (reactionRoleInformation) {
       // eslint-disable-next-line no-prototype-builtins
       if(reactionRoleInformation.emojiRoleMappings.hasOwnProperty(reaction.emoji.id)) {
@@ -169,6 +169,19 @@ dClient.on('messageReactionRemove', async (reaction, user) =>{
     console.log(error);
   }
 });
+
+dClient.on('guildMemberAdd', async member => {
+  const defaultRoleInfo = await DefaultRoleModel.findOne({ serverID: member.guild.id });
+  if (defaultRoleInfo) {
+    const role = member.guild.roles.cache.get(defaultRoleInfo.defaultRole);
+    console.log(chalk`{green ${member.user.tag}} joined {yellow ${member.guild.name}}. Giving default role {blue ${role.name}}`);
+    member.roles.add(role);
+  }
+});
+
+
+// MONGODB
+
 
 db.once('open', () => {
   console.log(chalk`{bgCyan Connected to MongoDB}`);

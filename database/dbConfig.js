@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
-const MessageSchema = new mongoose.Schema({
+const reactionRolesSchema = new mongoose.Schema({
   messageID : { type: String, required: true },
   emojiRoleMappings : { type: mongoose.Schema.Types.Mixed },
 });
+const defaultRoleSchema = new mongoose.Schema({
+  serverID: { type: String, required: true },
+  defaultRole: { type: String },
+});
 module.exports = {
   dbName: 'CozyBot',
-  MessageModel: mongoose.model('reactionRoles', MessageSchema),
+  ReactionRolesModel: mongoose.model('reactionRoles', reactionRolesSchema),
+  DefaultRoleModel: mongoose.model('defaultRoles', defaultRoleSchema),
 };

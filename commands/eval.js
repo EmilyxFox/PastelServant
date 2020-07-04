@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 const { MessageEmbed } = require('discord.js');
 const { defaultEmbed } = require('../embeds');
+const { DefaultRoleModel } = require('../database/dbConfig.js');
 
 module.exports = {
   name: 'eval',

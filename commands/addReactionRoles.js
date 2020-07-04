@@ -1,6 +1,6 @@
 const { MessageCollector, MessageEmbed } = require('discord.js');
 const { errorEmbed, unknownErrorEmbed, defaultEmbed } = require('../embeds');
-const { MessageModel } = require('../database/dbConfig.js');
+const { ReactionRolesModel } = require('../database/dbConfig.js');
 const chalk = require('chalk');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
       msg.delete({ timeout: 300 });
       const reactionRoleMessage = await msg.channel.messages.fetch(args[0]);
 
-      const checkDB = await MessageModel.findOne({ messageID: reactionRoleMessage.id });
+      const checkDB = await ReactionRolesModel.findOne({ messageID: reactionRoleMessage.id });
       if (!checkDB) {
         msg.channel.send(
           new MessageEmbed(defaultEmbed(msg))
@@ -146,7 +146,7 @@ module.exports = {
                   .catch(e => console.log(e));
               });
 
-              const dbMsgModel = new MessageModel({
+              const dbMsgModel = new ReactionRolesModel({
                 messageID : reactionRoleMessage.id,
                 emojiRoleMappings : emojiRoleMappings,
               });
