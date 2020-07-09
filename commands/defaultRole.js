@@ -25,7 +25,8 @@ module.exports = {
         return msg.reply(
           new MessageEmbed(defaultEmbed(msg))
             .setTitle(`${this.name} error:`)
-            .setDescription(`This server doesn't have a default role`),
+            .setDescription(`This server doesn't have a default role.
+            You can set one with \`${prefix}setDefaultRole\``),
         );
       }
 
