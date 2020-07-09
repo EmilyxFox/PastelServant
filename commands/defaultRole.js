@@ -12,19 +12,19 @@ module.exports = {
   cooldown: 10,
   requiredPermissions: ['ADMINISTRATOR'],
   devOnly: false,
-  async execute(msg, args) {
+  async execute(msg) {
     // eslint-disable-next-line no-unused-vars
     const dClient = msg.client;
 
     try {
       msg.delete({ timeout: 300 });
-      const reactionRoleMessage = await msg.channel.messages.fetch(args[0]);
 
-      const checkDB = await DefaultRoleModel.findOne({ messageID: reactionRoleMessage.id });
+      const checkDB = await DefaultRoleModel.findOne({ serverID: msg.guild.id });
+      console.log(checkDB);
       if(!checkDB) {
         return msg.reply(
           new MessageEmbed(defaultEmbed(msg))
-            .setTitle(`${this.name} error:`)
+            .setTitle(`⛔ DefaultRole:`)
             .setDescription(`This server doesn't have a default role.
             You can set one with \`${prefix}setDefaultRole\``),
         );
@@ -35,9 +35,9 @@ module.exports = {
 
       msg.channel.send(
         new MessageEmbed(defaultEmbed(msg))
-          .setTitle(`DefaultRole:`)
+          .setTitle(`✅ DefaultRole:`)
           .setDescription(`This server has **${role.name}** as its default role.
-          You can remove the defauly role with \`${prefix}delDefaultRole\``),
+          You can remove the default role with \`${prefix}delDefaultRole\``),
       );
     } catch(e) {
       console.log(e);
