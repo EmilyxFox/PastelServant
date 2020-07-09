@@ -4,10 +4,10 @@ const { DefaultRoleModel } = require('../database/dbConfig.js');
 const { prefix } = require('../discordConfig.json');
 
 module.exports = {
-  name: 'setDefaultRole',
-  description: 'Sets a default role for the server.',
-  args: true,
-  usage: '<role ID>',
+  name: 'defaultRole',
+  description: 'Get information about default role in the server',
+  args: false,
+  usage: '',
   guildOnly: true,
   cooldown: 10,
   requiredPermissions: ['ADMINISTRATOR'],
@@ -31,6 +31,7 @@ module.exports = {
       }
 
       const role = msg.guild.roles.cache.get(checkDB.defaultRole);
+
 
       msg.channel.send(
         new MessageEmbed(defaultEmbed(msg))
