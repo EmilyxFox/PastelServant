@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');
+const { defaultEmbed } = require('../embeds');
+
 module.exports = {
   name: 'userInfo',
   description: 'Displays info about a guild member.',
@@ -10,41 +13,39 @@ module.exports = {
   execute(msg, args) {
     const dClient = msg.client;
 
-    // Time Calculation function
-    function calculateTime(timestamp) {
+    const timeToString = timestamp => {
       const time = new Date(timestamp);
       const hours = time.getUTCHours();
-      const minutes = '0' + time.getUTCMinutes();
-      const seconds = '0' + time.getUTCSeconds();
+      const minutes = time.getUTCMinutes();
+      const seconds = time.getUTCSeconds();
 
-      const timeOutput = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+      console.log(minutes);
+      console.log(seconds);
+
+      const timeOutput = `${hours}:${minutes}:${seconds}`;
       return timeOutput;
-    }
-    // Date Calculation function
-    function calculateDate(timestamp) {
+    };
+    const dateToString = timestamp => {
       const date = new Date(timestamp);
       const year = date.getUTCFullYear();
       const month = date.getUTCMonth() + 1;
       const day = date.getUTCDate();
 
-      const dateOutput = year + '/' + month + '/' + day;
+      const dateOutput = `${year}/${month}/${day}`;
       return dateOutput;
-    }
+    };
 
-    // Get the mentioned member in args space 0
     const match = args[0].match(/<@!?(\d{17,19})>/);
-    // Remove mentioned member from args
-    args.shift();
+
     if (match) {
-      // Turn mention into userID, and find guildMember. Save in bannedUser
-      const mentionedMember = msg.guild.members.cache.get(match[1]);
-      const created = '📆' + calculateDate(mentionedMember.user.createdTimestamp) + '\n🕑' + calculateTime(mentionedMember.user.createdTimestamp) + ' UTC';
-      const joined = '📆' + calculateDate(mentionedMember.joinedTimestamp) + '\n🕑' + calculateTime(mentionedMember.joinedTimestamp) + ' UTC';
+      const member = msg.guild.members.cache.get(match[1]);
+      const created = member.user.createdTimestamp;
+      const joined = member.joinedTimestamp;
 
       // Status
-      let statusTitle = '';
-      let statusValue = '';
-      switch (mentionedMember.user.presence.status) {
+      let statusTitle = new String;
+      let statusValue = new String;
+      switch (member.user.presence.status) {
       case 'online':
         statusTitle = '<:online:660753049219760140> Status:';
         statusValue = 'Online';
@@ -63,81 +64,64 @@ module.exports = {
         break;
       }
 
-      // Create userInfo embed
-      const embed = {
-        'title': 'User Info',
-        'color': mentionedMember.displayColor,
-        'timestamp': new Date(),
-        'footer': {
-          'icon_url': msg.author.displayAvatarURL({
-            format: 'png',
-            dymamic: true,
-          }),
-          'text': `Look-up by ${msg.author.tag}`,
-        },
-        'thumbnail': {
-          'url': mentionedMember.user.displayAvatarURL({
-            format: 'png',
-            dymamic: true,
-          }),
-        },
-        'author': {
-          'name': dClient.user.username,
-          'icon_url': dClient.user.displayAvatarURL({
-            format: 'png',
-            dymamic: true,
-          }),
-        },
-        'fields': [
-          {
-            'name': '📜 Username:',
-            'value': mentionedMember.user.username,
-            'inline': true,
-          },
-          {
-            'name': '🏷️ Discrim:',
-            'value': `\`#${mentionedMember.user.discriminator}\``,
-            'inline': true,
-          },
-          {
-            'name': '🧬 ID:',
-            'value': `\`${mentionedMember.id}\``,
-            'inline': true,
-          },
-          {
-            'name': '🃏 Nickname',
-            'value': mentionedMember.nickname || '`N/A`',
-            'inline': true,
-          },
-          {
-            'name': '<:boost:660759462658965514> Booster:',
-            'value': (mentionedMember.premiumSince != null) ? 'Boosing!' : 'Not boosting',
-            'inline': true,
-          },
-          {
-            'name': statusTitle,
-            'value': statusValue,
-            'inline': true,
-          },
-          {
-            'name': '🔶 Account Creation Date:',
-            'value': created,
-            'inline': true,
-          },
-          {
-            'name': '🔸 Joined Guild:',
-            'value': joined,
-            'inline': true,
-          },
-        ],
-      };
-      msg.channel.send({
-        embed,
-      });
-
-      // If commander not in allowedRoles then send message
+      msg.channel.send(
+        new MessageEmbed(defaultEmbed(msg))
+          .setTitle(`UserInfo:`)
+          .setColor(member.displayColor)
+          .setFooter(`Look-up by ${msg.author.tag}`, msg.author.displayAvatarURL({ format:'png', dynamic:true }))
+          .setThumbnail(member.user.displayAvatarURL({ format: 'png', dymamic: true }))
+          .setAuthor(dClient.user.username, dClient.user.displayAvatarURL({ format:'png', dynamic:true }))
+          .addFields(
+            [
+              {
+                name: `📜 Username:`,
+                value: member.user.username,
+                inline: true,
+              },
+              {
+                name: `🏷️ Discrim:`,
+                value: `\`#${member.user.discriminator}\``,
+                inline: true,
+              },
+              {
+                name: `🧬 ID:`,
+                value: `\`${member.id}\``,
+                inline: true,
+              },
+              {
+                name: `🃏 Nickname`,
+                value: member.nickname || `\`N/A\``,
+                inline: true,
+              },
+              {
+                name: `<:boost:660759462658965514> Booster:`,
+                value: (member.premiumSince != null) ? `Boosing!` : `Not boosting`,
+                inline: true,
+              },
+              {
+                name: statusTitle,
+                value: statusValue,
+                inline: true,
+              },
+              {
+                'name': '🔶 Account Creation Date:',
+                'value': `📆${dateToString(created)}\n🕑${timeToString(created)}`,
+                'inline': true,
+              },
+              {
+                'name': '🔸 Joined Guild:',
+                'value': `📆${dateToString(joined)}\n🕑${timeToString(joined)}`,
+                'inline': true,
+              },
+            ],
+          ),
+      );
     } else {
-      msg.channel.send('Please mention a user.');
+      msg.reply(
+        new MessageEmbed(defaultEmbed(msg))
+          .setTitle(`${this.name} error:`)
+          .setDescription(`Couldn't find guild member. You can only look up members from this guild.`),
+      );
     }
   },
 };
