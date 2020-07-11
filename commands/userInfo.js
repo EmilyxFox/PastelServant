@@ -65,7 +65,7 @@ module.exports = {
       }
 
       msg.channel.send(
-        new MessageEmbed(defaultEmbed(msg))
+        new MessageEmbed()
           .setTitle(`UserInfo:`)
           .setColor(member.displayColor)
           .setFooter(`Look-up by ${msg.author.tag}`, msg.author.displayAvatarURL({ format:'png', dynamic:true }))
@@ -104,14 +104,14 @@ module.exports = {
                 inline: true,
               },
               {
-                'name': '🔶 Account Creation Date:',
-                'value': `📆${dateToString(created)}\n🕑${timeToString(created)}`,
-                'inline': true,
+                name: `🔶 Account Creation Date:`,
+                value: `📆${dateToString(created)}\n🕑${timeToString(created)}`,
+                inline: true,
               },
               {
-                'name': '🔸 Joined Guild:',
-                'value': `📆${dateToString(joined)}\n🕑${timeToString(joined)}`,
-                'inline': true,
+                name: `🔸 Joined Guild:`,
+                value: `📆${dateToString(joined)}\n🕑${timeToString(joined)}`,
+                inline: true,
               },
             ],
           ),
